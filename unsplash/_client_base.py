@@ -20,10 +20,8 @@ class HTTPClient:
     ):
         self.access_key = access_key
         self.base_url = base_url
-        self._client = httpx.Client(
-            timeout=timeout,
-            transport=httpx.HTTPTransport(retries=max_retries)
-        )
+        self.max_retries = max_retries
+        self._client = httpx.Client(timeout=timeout)
     
     def request(
         self,
@@ -87,10 +85,8 @@ class AsyncHTTPClient:
     ):
         self.access_key = access_key
         self.base_url = base_url
-        self._client = httpx.AsyncClient(
-            timeout=timeout,
-            transport=httpx.AsyncHTTPTransport(retries=max_retries)
-        )
+        self.max_retries = max_retries
+        self._client = httpx.AsyncClient(timeout=timeout)
 
     async def request(
         self,
