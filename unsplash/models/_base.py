@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import Optional, Generic, TypeVar, List
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, HttpUrl
 
 T = TypeVar('T')
 
@@ -26,7 +26,7 @@ class Page(BaseModel, Generic[T]):
 
 class Links(BaseModel):
     """Common links structure found in many objects."""
-    self: str
-    html: str
-    download: Optional[str] = None
-    download_location: Optional[str] = None
+    self: HttpUrl
+    html: HttpUrl
+    download: Optional[HttpUrl] = None
+    download_location: Optional[HttpUrl] = None
