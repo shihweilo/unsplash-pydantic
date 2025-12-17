@@ -1,9 +1,9 @@
 from ._client_base import HTTPClient, AsyncHTTPClient
 from .resources import (
-    PhotosResource,
-    UsersResource,
-    CollectionsResource,
-    SearchResource
+    PhotosResource, AsyncPhotosResource,
+    UsersResource, AsyncUsersResource,
+    CollectionsResource, AsyncCollectionsResource,
+    SearchResource, AsyncSearchResource
 )
 
 class UnsplashClient:
@@ -59,10 +59,10 @@ class AsyncUnsplashClient:
             timeout=timeout,
             max_retries=max_retries
         )
-        self.photos = PhotosResource(self._http)
-        self.users = UsersResource(self._http)
-        self.collections = CollectionsResource(self._http)
-        self.search = SearchResource(self._http)
+        self.photos = AsyncPhotosResource(self._http)
+        self.users = AsyncUsersResource(self._http)
+        self.collections = AsyncCollectionsResource(self._http)
+        self.search = AsyncSearchResource(self._http)
     
     async def __aenter__(self):
         return self
