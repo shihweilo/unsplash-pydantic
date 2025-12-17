@@ -1,9 +1,11 @@
 # Unsplash Python SDK
 
-[![PyPI version](https://badge.fury.io/py/unsplash-python.svg)](https://badge.fury.io/py/unsplash-python)
-[![Python Versions](https://img.shields.io/pypi/pyversions/unsplash-python.svg)](https://pypi.org/project/unsplash-python/)
+[![PyPI version](https://badge.fury.io/py/unsplash-pydantic.svg)](https://badge.fury.io/py/unsplash-pydantic)
+[![Python Versions](https://img.shields.io/pypi/pyversions/unsplash-pydantic.svg)](https://pypi.org/project/unsplash-pydantic/)
+[![Test](https://github.com/example/unsplash-pydantic/actions/workflows/test.yml/badge.svg)](https://github.com/example/unsplash-pydantic/actions/workflows/test.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Code Scale](https://img.shields.io/badge/Code%20Scale-Small-green.svg)](https://github.com/example/unsplash-python)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 
 > [!WARNING]
 > This is an unofficial SDK and is currently under active development.
@@ -23,13 +25,13 @@ A modern, type-safe Python client for the [Unsplash API](https://unsplash.com/de
 Install usage **pip**:
 
 ```bash
-pip install unsplash-python
+pip install unsplash-pydantic
 ```
 
 Or using **Poetry**:
 
 ```bash
-poetry add unsplash-python
+poetry add unsplash-pydantic
 ```
 
 ## 🚀 Quick Start

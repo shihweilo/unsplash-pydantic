@@ -1,8 +1,8 @@
 [tool.poetry]
-name = "unsplash-python"
+name = "unsplash-pydantic"
 version = "0.1.0"
 description = "A modern, Async-ready Unsplash API client for Python."
-authors = ["Your Name <your.email@example.com>"]
+authors = ["Shih-Wei Lo <shihwei@gmail.com>"]
 readme = "README.md"
 packages = [{include = "unsplash"}]
 
