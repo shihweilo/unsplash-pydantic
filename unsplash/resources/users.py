@@ -1,4 +1,4 @@
-from typing import List, Optional, Union, TYPE_CHECKING, Dict, Any
+from typing import List, Optional, Union, TYPE_CHECKING, Dict, Any, cast
 from ..models import User, Photo, Collection
 
 if TYPE_CHECKING:
@@ -18,7 +18,7 @@ class UsersResource:
     def portfolio(self, username: str) -> str:
         """Retrieve a user's portfolio link."""
         response = self._client.request("GET", f"/users/{username}/portfolio")
-        return response.json()["url"]
+        return str(response.json()["url"])
         
     def photos(
         self,
@@ -81,10 +81,10 @@ class UsersResource:
         response = self._client.request("GET", f"/users/{username}/collections", params=params)
         return [Collection.model_validate(item) for item in response.json()]
 
-    def statistics(self, username: str) -> dict: # TODO: Define Statistics model if needed
+    def statistics(self, username: str) -> Dict[str, Any]: # TODO: Define Statistics model if needed
         """Get a user's statistics."""
         response = self._client.request("GET", f"/users/{username}/statistics")
-        return response.json()
+        return cast(Dict[str, Any], response.json())
 
 
 class AsyncUsersResource:
@@ -101,7 +101,7 @@ class AsyncUsersResource:
     async def portfolio(self, username: str) -> str:
         """Retrieve a user's portfolio link."""
         response = await self._client.request("GET", f"/users/{username}/portfolio")
-        return response.json()["url"]
+        return str(response.json()["url"])
         
     async def photos(
         self,
@@ -164,7 +164,7 @@ class AsyncUsersResource:
         response = await self._client.request("GET", f"/users/{username}/collections", params=params)
         return [Collection.model_validate(item) for item in response.json()]
 
-    async def statistics(self, username: str) -> dict: # TODO: Define Statistics model if needed
+    async def statistics(self, username: str) -> Dict[str, Any]: # TODO: Define Statistics model if needed
         """Get a user's statistics."""
         response = await self._client.request("GET", f"/users/{username}/statistics")
-        return response.json()
+        return cast(Dict[str, Any], response.json())

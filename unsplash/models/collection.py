@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Optional, List
+from typing import Optional, List, Dict, Any
 from pydantic import HttpUrl
 from ._base import UnsplashModel, Links
 from .user import User
@@ -21,8 +21,8 @@ class Collection(UnsplashModel):
     total_photos: int
     private: bool = False
     share_key: Optional[str] = None
-    tags: List[dict] = []
+    tags: List[Dict[str, Any]] = []
     links: CollectionLinks
     user: User
     cover_photo: Optional[Photo] = None
-    preview_photos: List[dict] = []
+    preview_photos: List[Dict[str, Any]] = []

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "unsplash-pydantic"
-version = "0.1.0"
+version = "0.2.0"
 description = "A modern, Async-ready Unsplash API client for Python."
 authors = ["Shih-Wei Lo <shihwei@gmail.com>"]
 readme = "README.md"
@@ -29,6 +29,14 @@ target-version = "py39"
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP"]
 ignore = []
+
+[tool.mypy]
+python_version = "3.9"
+strict = true
+ignore_missing_imports = true
+warn_return_any = true
+warn_unused_configs = true
+exclude = ["tests/"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"

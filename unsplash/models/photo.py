@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Optional, List
+from typing import Optional, List, Dict, Any
 from pydantic import HttpUrl, Field
 from ._base import UnsplashModel, Links
 from .user import User
@@ -50,10 +50,10 @@ class Photo(UnsplashModel):
     likes: int
     liked_by_user: bool = False
     user: User
-    current_user_collections: List[dict] = Field(default_factory=list)
-    sponsorship: Optional[dict] = None
+    current_user_collections: List[Dict[str, Any]] = Field(default_factory=list)
+    sponsorship: Optional[Dict[str, Any]] = None
     exif: Optional[Exif] = None
     location: Optional[Location] = None
     views: Optional[int] = None
     downloads: Optional[int] = None
-    topics: List[dict] = Field(default_factory=list)
+    topics: List[Dict[str, Any]] = Field(default_factory=list)

@@ -29,7 +29,7 @@ class HTTPClient:
         self,
         method: str,
         path: str,
-        **kwargs
+        **kwargs: Any
     ) -> httpx.Response:
         headers = kwargs.pop("headers", {})
         headers["Authorization"] = f"Client-ID {self.access_key}"
@@ -96,7 +96,7 @@ class AsyncHTTPClient:
         self,
         method: str,
         path: str,
-        **kwargs
+        **kwargs: Any
     ) -> httpx.Response:
         headers = kwargs.pop("headers", {})
         headers["Authorization"] = f"Client-ID {self.access_key}"
@@ -142,5 +142,5 @@ class AsyncHTTPClient:
         else:
             raise UnsplashError(message, status, body)
 
-    async def aclose(self):
+    async def aclose(self) -> None:
         await self._client.aclose()

@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Any
 
 class UnsplashError(Exception):
     """Base exception for all Unsplash errors."""
@@ -26,7 +26,7 @@ class RateLimitError(UnsplashError):
         message: str,
         limit: Optional[int] = None,
         remaining: Optional[int] = None,
-        **kwargs
+        **kwargs: Any
     ):
         super().__init__(message, **kwargs)
         self.limit = limit
@@ -39,6 +39,6 @@ class NotFoundError(UnsplashError):
 class ValidationError(UnsplashError):
     """Invalid request parameters (422)."""
     
-    def __init__(self, message: str, errors: List[str], **kwargs):
+    def __init__(self, message: str, errors: List[str], **kwargs: Any):
         super().__init__(message, **kwargs)
         self.errors = errors
