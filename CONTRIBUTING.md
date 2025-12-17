@@ -6,7 +6,7 @@ Thank you for your interest in contributing to `unsplash-pydantic`! We welcome c
 
 1.  **Clone the repository**:
     ```bash
-    git clone https://github.com/yourusername/unsplash-pydantic.git
+    git clone https://github.com/shihweilo/unsplash-pydantic.git
     cd unsplash-pydantic
     ```
 

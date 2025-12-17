@@ -2,7 +2,7 @@
 
 [![PyPI version](https://badge.fury.io/py/unsplash-pydantic.svg)](https://badge.fury.io/py/unsplash-pydantic)
 [![Python Versions](https://img.shields.io/pypi/pyversions/unsplash-pydantic.svg)](https://pypi.org/project/unsplash-pydantic/)
-[![Test](https://github.com/example/unsplash-pydantic/actions/workflows/test.yml/badge.svg)](https://github.com/example/unsplash-pydantic/actions/workflows/test.yml)
+[![Test](https://github.com/shihweilo/unsplash-pydantic/actions/workflows/test.yml/badge.svg)](https://github.com/shihweilo/unsplash-pydantic/actions/workflows/test.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
