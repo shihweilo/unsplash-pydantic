@@ -61,7 +61,7 @@ class PhotosResource:
     def track_download(self, photo_id: str) -> str:
         """Track photo download (required by API guidelines)."""
         response = self._client.request("GET", f"/photos/{photo_id}/download")
-        return response.json()["url"]
+        return str(response.json()["url"])
 
     def download(self, photo_id: str, track: bool = True) -> str:
         """
@@ -131,7 +131,7 @@ class AsyncPhotosResource:
     async def track_download(self, photo_id: str) -> str:
         """Track photo download (required by API guidelines)."""
         response = await self._client.request("GET", f"/photos/{photo_id}/download")
-        return response.json()["url"]
+        return str(response.json()["url"])
 
     async def download(self, photo_id: str, track: bool = True) -> str:
         """

@@ -64,8 +64,8 @@ class AsyncUnsplashClient:
         self.collections = AsyncCollectionsResource(self._http)
         self.search = AsyncSearchResource(self._http)
     
-    async def __aenter__(self):
+    async def __aenter__(self) -> "AsyncUnsplashClient":
         return self
         
-    async def __aexit__(self, exc_type, exc_val, exc_tb):
+    async def __aexit__(self, exc_type: object, exc_val: object, exc_tb: object) -> None:
         await self._http.aclose()
