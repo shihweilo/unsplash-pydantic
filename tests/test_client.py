@@ -1,10 +1,10 @@
 import httpx
 import respx
+import pytest
 from unsplash import UnsplashClient, UnsplashError
 
-@respx.mock
-def test_get_photo_success(client):
-    respx.get("https://api.unsplash.com/photos/foo").mock(
+def test_get_photo_success(respx_mock):
+    respx_mock.get("https://api.unsplash.com/photos/foo").mock(
         return_value=httpx.Response(
             200, 
             json={
@@ -54,18 +54,17 @@ def test_get_photo_success(client):
         )
     )
     
+    client = UnsplashClient(access_key="test_key")
     photo = client.photos.get("foo")
     assert photo.id == "foo"
     
-@respx.mock
-def test_get_photo_not_found(client):
-    respx.get("https://api.unsplash.com/photos/missing").mock(
+def test_get_photo_not_found(respx_mock):
+    respx_mock.get("https://api.unsplash.com/photos/missing").mock(
         return_value=httpx.Response(404, json={"errors": ["Not Found"]})
     )
     
-    try:
+    client = UnsplashClient(access_key="test_key")
+    with pytest.raises(UnsplashError) as exc_info:
         client.photos.get("missing")
-        assert False, "Should raise UnsplashError"
-    except UnsplashError as e:
-        assert isinstance(e, UnsplashError)
-        assert e.http_status == 404
+    
+    assert exc_info.value.http_status == 404
