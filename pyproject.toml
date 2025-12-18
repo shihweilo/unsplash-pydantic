@@ -5,7 +5,6 @@ description = "A modern, Async-ready Unsplash Python API client with Pydantic"
 authors = ["Shih-Wei Chris Lo <shihwei@gmail.com>"]
 readme = "README.md"
 packages = [{include = "unsplash"}]
-requires-python = ">=3.9"
 license = "MIT"
 homepage = "https://github.com/shihweilo/unsplash-pydantic"
 repository = "https://github.com/shihweilo/unsplash-pydantic"
