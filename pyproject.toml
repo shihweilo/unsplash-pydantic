@@ -1,22 +1,52 @@
 [tool.poetry]
 name = "unsplash-pydantic"
-version = "0.2.0"
-description = "A modern, Async-ready Unsplash API client for Python."
-authors = ["Shih-Wei Lo <shihwei@gmail.com>"]
+version = "0.2.1"
+description = "A modern, Async-ready Unsplash Python API client with Pydantic"
+authors = ["Shih-Wei Chris Lo <shihwei@gmail.com>"]
 readme = "README.md"
 packages = [{include = "unsplash"}]
+requires-python = ">=3.9"
+license = "MIT"
+homepage = "https://github.com/shihweilo/unsplash-pydantic"
+repository = "https://github.com/shihweilo/unsplash-pydantic"
+documentation = "https://github.com/shihweilo/unsplash-pydantic#readme"
+
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Framework :: Pydantic",
+    "Framework :: Pydantic :: 2",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Multimedia :: Graphics",
+    "Typing :: Typed",
+    "Operating System :: OS Independent",
+]
+
+keywords = ["unsplash", "api", "pydantic", "photos", "images", "sdk", "async", "httpx"]
+
 
 [tool.poetry.dependencies]
 python = "^3.9"
 httpx = "^0.27.0"
 pydantic = "^2.6.0"
+typing-extensions = {version = "^4.7.0", python = "<3.11"}  # Add: for better type hints on older Python
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.0.0"
 pytest-asyncio = "^0.23.0"
+pytest-cov = "^4.1.0"
 respx = "^0.20.0"
 ruff = "^0.3.0"
 mypy = "^1.8.0"
+pre-commit = "^3.5.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -41,3 +71,18 @@ exclude = ["tests/"]
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 testpaths = ["tests"]
+addopts = "--cov=unsplash --cov-report=term-missing --cov-report=html"
+
+[tool.coverage.run]
+source = ["unsplash"]
+omit = ["tests/*", "**/__pycache__/*"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+]
