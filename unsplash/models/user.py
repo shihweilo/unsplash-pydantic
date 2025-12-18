@@ -11,8 +11,8 @@ class UserLinks(Links):
     photos: HttpUrl
     likes: HttpUrl
     portfolio: HttpUrl
-    following: HttpUrl
-    followers: HttpUrl
+    following: Optional[HttpUrl] = None
+    followers: Optional[HttpUrl] = None
 
 class User(UnsplashModel):
     id: str
