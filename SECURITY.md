@@ -98,7 +98,7 @@ When using unsplash-pydantic:
 
 Security updates will be released as patch versions (e.g., 0.2.1) and announced via:
 - GitHub Security Advisories
-- Release notes in CHANGELOG.md
+- GitHub Release notes
 - PyPI release descriptions
 
 ## Scope
