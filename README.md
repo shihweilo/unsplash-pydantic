@@ -115,6 +115,30 @@ except UnsplashError as e:
     print(f"API Error: {e.message}")
 ```
 
+### Optional Fields
+
+Unsplash returns **abbreviated objects** when a resource is embedded in another
+one. A user nested inside a photo, for example, omits `profile_image` and most
+`total_*` counters, and its `links` may carry only `self`, `html` and `photos`.
+
+The models mirror that reality: only fields present in *every* representation
+are required. On `User` that is `id` and `username`; on `Photo` it is `id`,
+`created_at`, `width`, `height`, `urls`, `links` and `user`. Everything else is
+`Optional` and defaults to `None`.
+
+```python
+photo = client.photos.get("Dwu85P9SOIk")
+
+photo.urls.full          # always present
+photo.user.username      # always present
+
+if photo.user.profile_image:          # may be omitted on an embedded user
+    print(photo.user.profile_image.large)
+```
+
+This means a type checker will point at the `None` cases for you, instead of the
+client raising a `ValidationError` from deep inside a response you cannot see.
+
 ### Retries
 
 Transport errors (connection resets, DNS failures, timeouts) and `5xx` responses

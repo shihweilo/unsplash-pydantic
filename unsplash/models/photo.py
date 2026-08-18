@@ -17,8 +17,8 @@ class PhotoUrls(UnsplashModel):
 
 
 class PhotoLinks(Links):
-    download: HttpUrl
-    download_location: HttpUrl
+    download: Optional[HttpUrl] = None
+    download_location: Optional[HttpUrl] = None
 
 
 class Exif(UnsplashModel):
@@ -44,9 +44,18 @@ class Location(UnsplashModel):
 
 
 class Photo(UnsplashModel):
+    """
+    A photo.
+
+    ``id`` and ``urls`` are always present. The remaining core fields
+    (``links``, ``user``, dimensions) are present on every photo this client
+    returns, but counters and timestamps that Unsplash omits from abbreviated
+    responses are optional.
+    """
+
     id: str
     created_at: datetime
-    updated_at: datetime
+    updated_at: Optional[datetime] = None
     width: int
     height: int
     color: Optional[str] = None
@@ -55,7 +64,7 @@ class Photo(UnsplashModel):
     alt_description: Optional[str] = None
     urls: PhotoUrls
     links: PhotoLinks
-    likes: int
+    likes: Optional[int] = None
     liked_by_user: bool = False
     user: User
     current_user_collections: list[dict[str, Any]] = Field(default_factory=list)
