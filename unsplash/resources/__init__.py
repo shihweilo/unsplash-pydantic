@@ -1,7 +1,7 @@
-from .photos import PhotosResource, AsyncPhotosResource
-from .users import UsersResource, AsyncUsersResource
-from .collections import CollectionsResource, AsyncCollectionsResource
-from .search import SearchResource, AsyncSearchResource
+from .collections import AsyncCollectionsResource, CollectionsResource
+from .photos import AsyncPhotosResource, PhotosResource
+from .search import AsyncSearchResource, SearchResource
+from .users import AsyncUsersResource, UsersResource
 
 __all__ = [
     "PhotosResource",

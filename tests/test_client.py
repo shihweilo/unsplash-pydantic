@@ -1,12 +1,13 @@
 import httpx
-import respx
 import pytest
+
 from unsplash import UnsplashClient, UnsplashError
+
 
 def test_get_photo_success(respx_mock):
     respx_mock.get("https://api.unsplash.com/photos/foo").mock(
         return_value=httpx.Response(
-            200, 
+            200,
             json={
                 "id": "foo",
                 "created_at": "2024-01-01T00:00:00Z",
@@ -20,13 +21,13 @@ def test_get_photo_success(respx_mock):
                     "full": "http://e.com/full",
                     "regular": "http://e.com/reg",
                     "small": "http://e.com/small",
-                    "thumb": "http://e.com/thumb"
+                    "thumb": "http://e.com/thumb",
                 },
                 "links": {
                     "self": "http://e.com",
                     "html": "http://e.com",
                     "download": "http://e.com/dl",
-                    "download_location": "http://e.com/dl_loc"
+                    "download_location": "http://e.com/dl_loc",
                 },
                 "user": {
                     "id": "u1",
@@ -38,7 +39,7 @@ def test_get_photo_success(respx_mock):
                     "profile_image": {
                         "small": "http://e.com/s",
                         "medium": "http://e.com/m",
-                        "large": "http://e.com/l"
+                        "large": "http://e.com/l",
                     },
                     "links": {
                         "self": "http://e.com",
@@ -47,24 +48,25 @@ def test_get_photo_success(respx_mock):
                         "likes": "http://e.com",
                         "portfolio": "http://e.com",
                         "following": "http://e.com",
-                        "followers": "http://e.com"
-                    }
-                }
-            }
+                        "followers": "http://e.com",
+                    },
+                },
+            },
         )
     )
-    
+
     client = UnsplashClient(access_key="test_key")
     photo = client.photos.get("foo")
     assert photo.id == "foo"
-    
+
+
 def test_get_photo_not_found(respx_mock):
     respx_mock.get("https://api.unsplash.com/photos/missing").mock(
         return_value=httpx.Response(404, json={"errors": ["Not Found"]})
     )
-    
+
     client = UnsplashClient(access_key="test_key")
     with pytest.raises(UnsplashError) as exc_info:
         client.photos.get("missing")
-    
+
     assert exc_info.value.http_status == 404

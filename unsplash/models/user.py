@@ -1,11 +1,15 @@
 from typing import Optional
+
 from pydantic import HttpUrl
-from ._base import UnsplashModel, Links
+
+from ._base import Links, UnsplashModel
+
 
 class UserProfileImage(UnsplashModel):
     small: HttpUrl
     medium: HttpUrl
     large: HttpUrl
+
 
 class UserLinks(Links):
     photos: HttpUrl
@@ -13,6 +17,7 @@ class UserLinks(Links):
     portfolio: HttpUrl
     following: Optional[HttpUrl] = None
     followers: Optional[HttpUrl] = None
+
 
 class User(UnsplashModel):
     id: str

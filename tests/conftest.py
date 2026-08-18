@@ -1,9 +1,12 @@
 import pytest
-from unsplash import UnsplashClient, AsyncUnsplashClient
+
+from unsplash import AsyncUnsplashClient, UnsplashClient
+
 
 @pytest.fixture
 def client():
     return UnsplashClient(access_key="test_key")
+
 
 @pytest.fixture
 async def async_client():

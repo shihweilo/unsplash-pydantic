@@ -1,5 +1,7 @@
 from datetime import datetime
+
 from unsplash.models import Photo
+
 
 def test_photo_model_parsing():
     data = {
@@ -20,16 +22,13 @@ def test_photo_model_parsing():
             "exposure_time": "0.011111111111111112",
             "aperture": "4.970854",
             "focal_length": "37",
-            "iso": 100
+            "iso": 100,
         },
         "location": {
             "name": "Montreal, Qc",
             "city": "Montreal",
             "country": "Canada",
-            "position": {
-                "latitude": 45.473298,
-                "longitude": -73.638488
-            }
+            "position": {"latitude": 45.473298, "longitude": -73.638488},
         },
         "current_user_collections": [
             {
@@ -39,7 +38,7 @@ def test_photo_model_parsing():
                 "last_collected_at": "2016-06-02T13:10:03-04:00",
                 "updated_at": "2016-07-10T11:00:01-05:00",
                 "cover_photo": None,
-                "user": None
+                "user": None,
             }
         ],
         "urls": {
@@ -47,13 +46,13 @@ def test_photo_model_parsing():
             "full": "https://images.unsplash.com/photo-1417325384643-aac51acc9e5d?q=75&fm=jpg",
             "regular": "https://images.unsplash.com/photo-1417325384643-aac51acc9e5d?q=75&fm=jpg&w=1080&fit=max",
             "small": "https://images.unsplash.com/photo-1417325384643-aac51acc9e5d?q=75&fm=jpg&w=400&fit=max",
-            "thumb": "https://images.unsplash.com/photo-1417325384643-aac51acc9e5d?q=75&fm=jpg&w=200&fit=max"
+            "thumb": "https://images.unsplash.com/photo-1417325384643-aac51acc9e5d?q=75&fm=jpg&w=200&fit=max",
         },
         "links": {
             "self": "https://api.unsplash.com/photos/Dwu85P9SOIk",
             "html": "https://unsplash.com/photos/Dwu85P9SOIk",
             "download": "https://unsplash.com/photos/Dwu85P9SOIk/download",
-            "download_location": "https://api.unsplash.com/photos/Dwu85P9SOIk/download"
+            "download_location": "https://api.unsplash.com/photos/Dwu85P9SOIk/download",
         },
         "user": {
             "id": "QPxL2MGqfrw",
@@ -73,16 +72,16 @@ def test_photo_model_parsing():
                 "likes": "https://api.unsplash.com/users/exampleuser/likes",
                 "portfolio": "https://api.unsplash.com/users/exampleuser/portfolio",
                 "following": "https://api.unsplash.com/users/exampleuser/following",
-                "followers": "https://api.unsplash.com/users/exampleuser/followers"
+                "followers": "https://api.unsplash.com/users/exampleuser/followers",
             },
             "profile_image": {
                 "small": "https://images.unsplash.com/profile.jpg",
                 "medium": "https://images.unsplash.com/profile.jpg",
-                "large": "https://images.unsplash.com/profile.jpg"
-            }
-        }
+                "large": "https://images.unsplash.com/profile.jpg",
+            },
+        },
     }
-    
+
     photo = Photo.model_validate(data)
     assert photo.id == "Dwu85P9SOIk"
     assert photo.width == 2448
