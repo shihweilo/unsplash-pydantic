@@ -58,6 +58,17 @@ print(f"Download URL: {photo.urls.full}")
 # Search for photos
 results = client.search.photos("mountains", page=1, per_page=10)
 print(f"Found {results.total} photos")
+
+# Release the connection pool when you are done
+client.close()
+```
+
+The client can also be used as a context manager, which closes the underlying
+connection pool on exit:
+
+```python
+with UnsplashClient(access_key=os.getenv("UNSPLASH_ACCESS_KEY")) as client:
+    photo = client.photos.random(query="nature")
 ```
 
 ### Asynchronous Client
@@ -84,6 +95,9 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
+If you cannot use `async with`, call `await client.aclose()` to release the
+connection pool explicitly.
+
 ## 📚 Core Concepts
 
 ### Error Handling
@@ -99,6 +113,53 @@ except RateLimitError as e:
     print(f"Rate limited! Limit: {e.limit}, Remaining: {e.remaining}")
 except UnsplashError as e:
     print(f"API Error: {e.message}")
+```
+
+### Optional Fields
+
+Unsplash returns **abbreviated objects** when a resource is embedded in another
+one. A user nested inside a photo, for example, omits `profile_image` and most
+`total_*` counters, and its `links` may carry only `self`, `html` and `photos`.
+
+The models mirror that reality: only fields present in *every* representation
+are required. On `User` that is `id` and `username`; on `Photo` it is `id`,
+`created_at`, `width`, `height`, `urls`, `links` and `user`. Everything else is
+`Optional` and defaults to `None`.
+
+```python
+photo = client.photos.get("Dwu85P9SOIk")
+
+photo.urls.full          # always present
+photo.user.username      # always present
+
+if photo.user.profile_image:          # may be omitted on an embedded user
+    print(photo.user.profile_image.large)
+```
+
+This means a type checker will point at the `None` cases for you, instead of the
+client raising a `ValidationError` from deep inside a response you cannot see.
+
+### Retries
+
+Transport errors (connection resets, DNS failures, timeouts) and `5xx` responses
+are retried automatically with exponential backoff, up to `max_retries` times
+(default `3`, so up to 4 attempts total). A `Retry-After` header is honored when
+the server sends one.
+
+Rate limits (`429`) are deliberately **not** retried unless the response carries
+a short `Retry-After`. Unsplash's quota resets hourly, so retrying a rate-limited
+request would only delay the `RateLimitError` you need to handle:
+
+```python
+from unsplash import RateLimitError, UnsplashClient
+
+# Disable retries entirely
+client = UnsplashClient(access_key="...", max_retries=0)
+
+try:
+    photo = client.photos.random()
+except RateLimitError as exc:
+    print(f"Quota exhausted: {exc.remaining}/{exc.limit} remaining")
 ```
 
 ### Unsplash Guidelines

@@ -40,3 +40,12 @@ venv.bak/
 htmlcov/
 .mypy_cache/
 .ruff_cache/
+rules.md
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+
+# Local debug scripts (may contain live API keys -- do not commit)
+test_oauth_debug.py

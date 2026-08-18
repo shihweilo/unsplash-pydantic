@@ -1,10 +1,11 @@
 [tool.poetry]
 name = "unsplash-pydantic"
-version = "0.2.1"
+version = "0.3.0"
 description = "A modern, Async-ready Unsplash Python API client with Pydantic"
 authors = ["Shih-Wei Chris Lo <shihwei@gmail.com>"]
 readme = "README.md"
 packages = [{include = "unsplash"}]
+include = [{path = "unsplash/py.typed", format = ["sdist", "wheel"]}]
 license = "MIT"
 homepage = "https://github.com/shihweilo/unsplash-pydantic"
 repository = "https://github.com/shihweilo/unsplash-pydantic"
@@ -70,13 +71,14 @@ exclude = ["tests/"]
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 testpaths = ["tests"]
-addopts = "--cov=unsplash --cov-report=term-missing --cov-report=html"
+addopts = "-q"
 
 [tool.coverage.run]
 source = ["unsplash"]
 omit = ["tests/*", "**/__pycache__/*"]
 
 [tool.coverage.report]
+fail_under = 55
 exclude_lines = [
     "pragma: no cover",
     "def __repr__",

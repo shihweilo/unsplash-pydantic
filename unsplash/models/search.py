@@ -1,20 +1,22 @@
-from typing import List, Generic, TypeVar
 from ._base import UnsplashModel
+from .collection import Collection
 from .photo import Photo
 from .user import User
-from .collection import Collection
+
 
 class SearchResults(UnsplashModel):
     total: int
     total_pages: int
-    results: List[Photo]
+    results: list[Photo]
+
 
 class SearchUsersResults(UnsplashModel):
     total: int
     total_pages: int
-    results: List[User]
+    results: list[User]
+
 
 class SearchCollectionsResults(UnsplashModel):
     total: int
     total_pages: int
-    results: List[Collection]
+    results: list[Collection]
