@@ -1,7 +1,7 @@
 import httpx
 import pytest
 
-from unsplash import UnsplashClient, UnsplashError
+from unsplash import AsyncUnsplashClient, UnsplashClient, UnsplashError
 
 
 def test_get_photo_success(respx_mock):
@@ -70,3 +70,27 @@ def test_get_photo_not_found(respx_mock):
         client.photos.get("missing")
 
     assert exc_info.value.http_status == 404
+
+
+def test_sync_client_context_manager_closes_pool():
+    with UnsplashClient(access_key="test_key") as client:
+        assert not client._http._client.is_closed
+    assert client._http._client.is_closed
+
+
+def test_sync_client_explicit_close():
+    client = UnsplashClient(access_key="test_key")
+    client.close()
+    assert client._http._client.is_closed
+
+
+async def test_async_client_context_manager_closes_pool():
+    async with AsyncUnsplashClient(access_key="test_key") as client:
+        assert not client._http._client.is_closed
+    assert client._http._client.is_closed
+
+
+async def test_async_client_explicit_aclose():
+    client = AsyncUnsplashClient(access_key="test_key")
+    await client.aclose()
+    assert client._http._client.is_closed

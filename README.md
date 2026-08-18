@@ -58,6 +58,17 @@ print(f"Download URL: {photo.urls.full}")
 # Search for photos
 results = client.search.photos("mountains", page=1, per_page=10)
 print(f"Found {results.total} photos")
+
+# Release the connection pool when you are done
+client.close()
+```
+
+The client can also be used as a context manager, which closes the underlying
+connection pool on exit:
+
+```python
+with UnsplashClient(access_key=os.getenv("UNSPLASH_ACCESS_KEY")) as client:
+    photo = client.photos.random(query="nature")
 ```
 
 ### Asynchronous Client
@@ -84,6 +95,9 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
+If you cannot use `async with`, call `await client.aclose()` to release the
+connection pool explicitly.
+
 ## 📚 Core Concepts
 
 ### Error Handling
@@ -99,6 +113,29 @@ except RateLimitError as e:
     print(f"Rate limited! Limit: {e.limit}, Remaining: {e.remaining}")
 except UnsplashError as e:
     print(f"API Error: {e.message}")
+```
+
+### Retries
+
+Transport errors (connection resets, DNS failures, timeouts) and `5xx` responses
+are retried automatically with exponential backoff, up to `max_retries` times
+(default `3`, so up to 4 attempts total). A `Retry-After` header is honored when
+the server sends one.
+
+Rate limits (`429`) are deliberately **not** retried unless the response carries
+a short `Retry-After`. Unsplash's quota resets hourly, so retrying a rate-limited
+request would only delay the `RateLimitError` you need to handle:
+
+```python
+from unsplash import RateLimitError, UnsplashClient
+
+# Disable retries entirely
+client = UnsplashClient(access_key="...", max_retries=0)
+
+try:
+    photo = client.photos.random()
+except RateLimitError as exc:
+    print(f"Quota exhausted: {exc.remaining}/{exc.limit} remaining")
 ```
 
 ### Unsplash Guidelines

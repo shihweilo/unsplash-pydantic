@@ -19,7 +19,10 @@ class UnsplashClient:
         access_key: Your Application ID (Access Key).
         base_url: Optional override for API base URL.
         timeout: Request timeout in seconds (default 30.0).
-        max_retries: Number of retries for failed requests (default 3).
+        max_retries: Retries for transport errors and 5xx responses
+            (default 3). A 429 is only retried when the response carries a
+            short Retry-After; Unsplash's quota is hourly, so retrying it
+            otherwise just delays the error.
     """
 
     def __init__(
@@ -40,6 +43,16 @@ class UnsplashClient:
         self.collections = CollectionsResource(self._http)
         self.search = SearchResource(self._http)
 
+    def close(self) -> None:
+        """Close the underlying HTTP connection pool."""
+        self._http.close()
+
+    def __enter__(self) -> "UnsplashClient":
+        return self
+
+    def __exit__(self, exc_type: object, exc_val: object, exc_tb: object) -> None:
+        self.close()
+
 
 class AsyncUnsplashClient:
     """
@@ -49,7 +62,10 @@ class AsyncUnsplashClient:
         access_key: Your Application ID (Access Key).
         base_url: Optional override for API base URL.
         timeout: Request timeout in seconds (default 30.0).
-        max_retries: Number of retries for failed requests (default 3).
+        max_retries: Retries for transport errors and 5xx responses
+            (default 3). A 429 is only retried when the response carries a
+            short Retry-After; Unsplash's quota is hourly, so retrying it
+            otherwise just delays the error.
     """
 
     def __init__(
@@ -70,10 +86,14 @@ class AsyncUnsplashClient:
         self.collections = AsyncCollectionsResource(self._http)
         self.search = AsyncSearchResource(self._http)
 
+    async def aclose(self) -> None:
+        """Close the underlying HTTP connection pool."""
+        await self._http.aclose()
+
     async def __aenter__(self) -> "AsyncUnsplashClient":
         return self
 
     async def __aexit__(
         self, exc_type: object, exc_val: object, exc_tb: object
     ) -> None:
-        await self._http.aclose()
+        await self.aclose()
