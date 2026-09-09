@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Optional
 
 from pydantic import HttpUrl
@@ -9,6 +10,15 @@ class UserProfileImage(UnsplashModel):
     small: HttpUrl
     medium: HttpUrl
     large: HttpUrl
+
+
+class UserSocial(UnsplashModel):
+    """Social handles mirrored alongside the top-level user fields."""
+
+    instagram_username: Optional[str] = None
+    portfolio_url: Optional[HttpUrl] = None
+    twitter_username: Optional[str] = None
+    paypal_email: Optional[str] = None
 
 
 class UserLinks(Links):
@@ -53,3 +63,14 @@ class User(UnsplashModel):
     total_collections: Optional[int] = None
     profile_image: Optional[UserProfileImage] = None
     links: Optional[UserLinks] = None
+    updated_at: Optional[datetime] = None
+    accepted_tos: Optional[bool] = None
+    for_hire: Optional[bool] = None
+    social: Optional[UserSocial] = None
+    total_free_photos: Optional[int] = None
+    total_promoted_photos: Optional[int] = None
+    total_illustrations: Optional[int] = None
+    total_free_illustrations: Optional[int] = None
+    total_promoted_illustrations: Optional[int] = None
+    # Only present on a topic's top_contributors_last_30_days entries.
+    approved_submissions: Optional[int] = None
