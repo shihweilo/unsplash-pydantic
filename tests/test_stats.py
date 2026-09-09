@@ -15,7 +15,6 @@ PHOTO_STATS = {
         },
     },
     "views": {"total": 1075533, "historical": {"change": 45856}},
-    "likes": {"total": 40},
 }
 
 USER_STATS = {
@@ -55,7 +54,6 @@ def test_user_statistics_is_typed(respx_mock):
     assert stats.username == "exampleuser"
     assert stats.downloads is not None
     assert stats.downloads.total == 15687
-    assert stats.likes is None
 
 
 def test_stats_total(respx_mock):
@@ -115,5 +113,5 @@ async def test_async_stats(respx_mock):
         photo = await client.photos.statistics("abc")
 
     assert month.downloads == 7
-    assert photo.likes is not None
-    assert photo.likes.total == 40
+    assert photo.downloads is not None
+    assert photo.downloads.total == 6303

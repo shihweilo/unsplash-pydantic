@@ -43,6 +43,13 @@ class Location(UnsplashModel):
     position: Optional[LocationPosition] = None
 
 
+class TopicSubmission(UnsplashModel):
+    """Status of a photo's submission to a topic."""
+
+    status: Optional[str] = None
+    approved_on: Optional[datetime] = None
+
+
 class Photo(UnsplashModel):
     """
     A photo.
@@ -54,7 +61,11 @@ class Photo(UnsplashModel):
     """
 
     id: str
+    slug: Optional[str] = None
+    alternative_slugs: dict[str, str] = Field(default_factory=dict)
+    asset_type: Optional[str] = None
     created_at: datetime
+    promoted_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None
     width: int
     height: int
@@ -62,6 +73,7 @@ class Photo(UnsplashModel):
     blur_hash: Optional[str] = None
     description: Optional[str] = None
     alt_description: Optional[str] = None
+    short_description: Optional[str] = None
     urls: PhotoUrls
     links: PhotoLinks
     likes: Optional[int] = None
@@ -74,3 +86,6 @@ class Photo(UnsplashModel):
     views: Optional[int] = None
     downloads: Optional[int] = None
     topics: list[dict[str, Any]] = Field(default_factory=list)
+    topic_submissions: dict[str, TopicSubmission] = Field(default_factory=dict)
+    breadcrumbs: list[dict[str, Any]] = Field(default_factory=list)
+    bookmarked: Optional[bool] = None

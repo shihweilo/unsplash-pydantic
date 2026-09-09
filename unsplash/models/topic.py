@@ -36,9 +36,11 @@ class Topic(UnsplashModel):
     featured: bool = False
     total_photos: Optional[int] = None
     status: Optional[str] = None
+    media_types: list[str] = Field(default_factory=list)
     links: Optional[TopicLinks] = None
     owners: list[User] = Field(default_factory=list)
     top_contributors: list[User] = Field(default_factory=list)
+    top_contributors_last_30_days: list[User] = Field(default_factory=list)
     cover_photo: Optional[Photo] = None
     preview_photos: list[dict[str, Any]] = Field(default_factory=list)
     current_user_contributions: list[dict[str, Any]] = Field(default_factory=list)

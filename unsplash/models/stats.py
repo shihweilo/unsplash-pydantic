@@ -32,28 +32,28 @@ class PhotoStatistics(UnsplashModel):
     """Statistics for a single photo."""
 
     id: Optional[str] = None
+    slug: Optional[str] = None
     downloads: Optional[Statistic] = None
     views: Optional[Statistic] = None
-    likes: Optional[Statistic] = None
 
 
 class UserStatistics(UnsplashModel):
     """Statistics for a single user."""
 
+    id: Optional[str] = None
     username: Optional[str] = None
     downloads: Optional[Statistic] = None
     views: Optional[Statistic] = None
-    likes: Optional[Statistic] = None
 
 
 class TotalStats(UnsplashModel):
     """Platform-wide totals from ``GET /stats/total``."""
 
     total_photos: Optional[int] = None
+    photo_downloads: Optional[int] = None
     photos: Optional[int] = None
     downloads: Optional[int] = None
     views: Optional[int] = None
-    likes: Optional[int] = None
     photographers: Optional[int] = None
     pixels: Optional[int] = None
     downloads_per_second: Optional[int] = None
@@ -68,7 +68,6 @@ class MonthStats(UnsplashModel):
 
     downloads: Optional[int] = None
     views: Optional[int] = None
-    likes: Optional[int] = None
     new_photos: Optional[int] = None
     new_photographers: Optional[int] = None
     new_pixels: Optional[int] = None
