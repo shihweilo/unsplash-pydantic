@@ -1,6 +1,7 @@
 from .collections import AsyncCollectionsResource, CollectionsResource
 from .photos import AsyncPhotosResource, PhotosResource
 from .search import AsyncSearchResource, SearchResource
+from .stats import AsyncStatsResource, StatsResource
 from .topics import AsyncTopicsResource, TopicsResource
 from .users import AsyncUsersResource, UsersResource
 
@@ -15,4 +16,6 @@ __all__ = [
     "AsyncSearchResource",
     "TopicsResource",
     "AsyncTopicsResource",
+    "StatsResource",
+    "AsyncStatsResource",
 ]

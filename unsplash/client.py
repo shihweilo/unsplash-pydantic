@@ -3,11 +3,13 @@ from .resources import (
     AsyncCollectionsResource,
     AsyncPhotosResource,
     AsyncSearchResource,
+    AsyncStatsResource,
     AsyncTopicsResource,
     AsyncUsersResource,
     CollectionsResource,
     PhotosResource,
     SearchResource,
+    StatsResource,
     TopicsResource,
     UsersResource,
 )
@@ -45,6 +47,7 @@ class UnsplashClient:
         self.collections = CollectionsResource(self._http)
         self.search = SearchResource(self._http)
         self.topics = TopicsResource(self._http)
+        self.stats = StatsResource(self._http)
 
     def close(self) -> None:
         """Close the underlying HTTP connection pool."""
@@ -89,6 +92,7 @@ class AsyncUnsplashClient:
         self.collections = AsyncCollectionsResource(self._http)
         self.search = AsyncSearchResource(self._http)
         self.topics = AsyncTopicsResource(self._http)
+        self.stats = AsyncStatsResource(self._http)
 
     async def aclose(self) -> None:
         """Close the underlying HTTP connection pool."""

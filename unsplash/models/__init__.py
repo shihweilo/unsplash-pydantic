@@ -2,6 +2,15 @@ from ._base import Links, Page
 from .collection import Collection, CollectionLinks
 from .photo import Exif, Location, LocationPosition, Photo, PhotoLinks, PhotoUrls
 from .search import SearchCollectionsResults, SearchResults, SearchUsersResults
+from .stats import (
+    HistoricalData,
+    HistoricalValue,
+    MonthStats,
+    PhotoStatistics,
+    Statistic,
+    TotalStats,
+    UserStatistics,
+)
 from .topic import Topic, TopicLinks
 from .user import User, UserLinks, UserProfileImage
 
@@ -21,6 +30,13 @@ __all__ = [
     "CollectionLinks",
     "Topic",
     "TopicLinks",
+    "Statistic",
+    "HistoricalData",
+    "HistoricalValue",
+    "PhotoStatistics",
+    "UserStatistics",
+    "TotalStats",
+    "MonthStats",
     "SearchResults",
     "SearchUsersResults",
     "SearchCollectionsResults",

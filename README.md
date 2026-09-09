@@ -112,6 +112,19 @@ topic = client.topics.get("wallpapers")
 photos = client.topics.photos("wallpapers", orientation="landscape", per_page=5)
 ```
 
+### Statistics
+
+```python
+photo_stats = client.photos.statistics("Dwu85P9SOIk", resolution="days", quantity=30)
+print(photo_stats.downloads.total)
+
+user_stats = client.users.statistics("exampleuser")
+platform = client.stats.total()      # totals across all of Unsplash
+last_month = client.stats.month()    # trailing 30 days
+```
+
+All statistics fields are optional, so check for `None` before use.
+
 ## 📚 Core Concepts
 
 ### Error Handling

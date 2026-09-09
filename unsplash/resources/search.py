@@ -22,6 +22,7 @@ class SearchResource:
         order_by: Optional[str] = None,
         collections: Optional[str] = None,
         content_filter: Optional[str] = None,
+        lang: Optional[str] = None,
     ) -> SearchResults:
         """Search photos."""
         params: dict[str, Any] = {"query": query, "page": page, "per_page": per_page}
@@ -35,6 +36,8 @@ class SearchResource:
             params["collections"] = collections
         if content_filter:
             params["content_filter"] = content_filter
+        if lang:
+            params["lang"] = lang
 
         response = self._client.request("GET", "/search/photos", params=params)
         return SearchResults.model_validate(response.json())
@@ -72,6 +75,7 @@ class AsyncSearchResource:
         order_by: Optional[str] = None,
         collections: Optional[str] = None,
         content_filter: Optional[str] = None,
+        lang: Optional[str] = None,
     ) -> SearchResults:
         """Search photos."""
         params: dict[str, Any] = {"query": query, "page": page, "per_page": per_page}
@@ -85,6 +89,8 @@ class AsyncSearchResource:
             params["collections"] = collections
         if content_filter:
             params["content_filter"] = content_filter
+        if lang:
+            params["lang"] = lang
 
         response = await self._client.request("GET", "/search/photos", params=params)
         return SearchResults.model_validate(response.json())

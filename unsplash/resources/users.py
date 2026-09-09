@@ -1,6 +1,6 @@
-from typing import TYPE_CHECKING, Any, Optional, cast
+from typing import TYPE_CHECKING, Any, Optional
 
-from ..models import Collection, Photo, User
+from ..models import Collection, Photo, User, UserStatistics
 
 if TYPE_CHECKING:
     from .._client_base import AsyncHTTPClient, HTTPClient
@@ -84,11 +84,18 @@ class UsersResource:
         return [Collection.model_validate(item) for item in response.json()]
 
     def statistics(
-        self, username: str
-    ) -> dict[str, Any]:  # TODO: Define Statistics model if needed
-        """Get a user's statistics."""
-        response = self._client.request("GET", f"/users/{username}/statistics")
-        return cast(dict[str, Any], response.json())
+        self,
+        username: str,
+        resolution: str = "days",
+        quantity: int = 30,
+    ) -> UserStatistics:
+        """Get a user's download, view and like statistics."""
+        response = self._client.request(
+            "GET",
+            f"/users/{username}/statistics",
+            params={"resolution": resolution, "quantity": quantity},
+        )
+        return UserStatistics.model_validate(response.json())
 
 
 class AsyncUsersResource:
@@ -169,8 +176,15 @@ class AsyncUsersResource:
         return [Collection.model_validate(item) for item in response.json()]
 
     async def statistics(
-        self, username: str
-    ) -> dict[str, Any]:  # TODO: Define Statistics model if needed
-        """Get a user's statistics."""
-        response = await self._client.request("GET", f"/users/{username}/statistics")
-        return cast(dict[str, Any], response.json())
+        self,
+        username: str,
+        resolution: str = "days",
+        quantity: int = 30,
+    ) -> UserStatistics:
+        """Get a user's download, view and like statistics."""
+        response = await self._client.request(
+            "GET",
+            f"/users/{username}/statistics",
+            params={"resolution": resolution, "quantity": quantity},
+        )
+        return UserStatistics.model_validate(response.json())
