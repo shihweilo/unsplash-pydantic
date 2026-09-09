@@ -1,7 +1,7 @@
 import builtins
 from typing import TYPE_CHECKING, Any, Optional, Union
 
-from ..models import Photo
+from ..models import Photo, PhotoStatistics
 
 if TYPE_CHECKING:
     from .._client_base import AsyncHTTPClient, HTTPClient
@@ -37,6 +37,7 @@ class PhotosResource:
         topics: Optional[builtins.list[str]] = None,
         username: Optional[str] = None,
         count: Optional[int] = None,
+        content_filter: Optional[str] = None,
     ) -> Union[Photo, builtins.list[Photo]]:
         """Get random photo(s)."""
         params: dict[str, Any] = {}
@@ -52,6 +53,8 @@ class PhotosResource:
             params["username"] = username
         if count:
             params["count"] = count
+        if content_filter:
+            params["content_filter"] = content_filter
 
         response = self._client.request("GET", "/photos/random", params=params)
         data = response.json()
@@ -64,6 +67,20 @@ class PhotosResource:
         """Track photo download (required by API guidelines)."""
         response = self._client.request("GET", f"/photos/{photo_id}/download")
         return str(response.json()["url"])
+
+    def statistics(
+        self,
+        photo_id: str,
+        resolution: str = "days",
+        quantity: int = 30,
+    ) -> PhotoStatistics:
+        """Get a photo's download, view and like statistics."""
+        response = self._client.request(
+            "GET",
+            f"/photos/{photo_id}/statistics",
+            params={"resolution": resolution, "quantity": quantity},
+        )
+        return PhotoStatistics.model_validate(response.json())
 
     def download(self, photo_id: str, track: bool = True) -> str:
         """
@@ -106,6 +123,7 @@ class AsyncPhotosResource:
         topics: Optional[builtins.list[str]] = None,
         username: Optional[str] = None,
         count: Optional[int] = None,
+        content_filter: Optional[str] = None,
     ) -> Union[Photo, builtins.list[Photo]]:
         """Get random photo(s)."""
         params: dict[str, Any] = {}
@@ -121,6 +139,8 @@ class AsyncPhotosResource:
             params["username"] = username
         if count:
             params["count"] = count
+        if content_filter:
+            params["content_filter"] = content_filter
 
         response = await self._client.request("GET", "/photos/random", params=params)
         data = response.json()
@@ -133,6 +153,20 @@ class AsyncPhotosResource:
         """Track photo download (required by API guidelines)."""
         response = await self._client.request("GET", f"/photos/{photo_id}/download")
         return str(response.json()["url"])
+
+    async def statistics(
+        self,
+        photo_id: str,
+        resolution: str = "days",
+        quantity: int = 30,
+    ) -> PhotoStatistics:
+        """Get a photo's download, view and like statistics."""
+        response = await self._client.request(
+            "GET",
+            f"/photos/{photo_id}/statistics",
+            params={"resolution": resolution, "quantity": quantity},
+        )
+        return PhotoStatistics.model_validate(response.json())
 
     async def download(self, photo_id: str, track: bool = True) -> str:
         """
