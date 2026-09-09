@@ -18,7 +18,7 @@ A modern, type-safe Python client for the [Unsplash API](https://unsplash.com/de
 - **Async Native**: First-class `async`/`await` support with `AsyncUnsplashClient`.
 - **Modern**: Built on `httpx` (HTTP/2 support, connection pooling).
 - **Developer Friendly**: IDE auto-completion, detailed error messages, and fully documented resources.
-- **Resource Oriented**: Clean API design mirroring the Unsplash documentation (Photos, Users, Collections, Search).
+- **Resource Oriented**: Clean API design mirroring the Unsplash documentation (Photos, Users, Collections, Search, Topics).
 
 ## 🛠️ Installation
 
@@ -97,6 +97,20 @@ if __name__ == "__main__":
 
 If you cannot use `async with`, call `await client.aclose()` to release the
 connection pool explicitly.
+
+### Topics
+
+Topics are Unsplash's editorial categories. Accepted by id or slug:
+
+```python
+# Browse topics (order_by: featured, latest, oldest, position)
+for topic in client.topics.list(order_by="featured"):
+    print(f"{topic.slug}: {topic.total_photos} photos")
+
+# A single topic, and its photos
+topic = client.topics.get("wallpapers")
+photos = client.topics.photos("wallpapers", orientation="landscape", per_page=5)
+```
 
 ## 📚 Core Concepts
 
